@@ -1,0 +1,7 @@
+dist: trusty
+language: go
+
+install: true
+
+script:
+  - make test
