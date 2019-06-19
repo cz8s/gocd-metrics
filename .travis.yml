@@ -1,7 +1,12 @@
 dist: trusty
 language: go
+addons:
+  apt:
+    packages:
+      - go-dep
 
 install: true
 
 script:
   - make test
+  - make
