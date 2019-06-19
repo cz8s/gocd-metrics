@@ -11,5 +11,6 @@ before_install:
 install: true
 
 script:
+  - make lint
   - make test
   - make docker
