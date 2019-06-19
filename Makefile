@@ -14,3 +14,7 @@ docker: gocd-metrics
 
 docker-run: docker
 	docker run -d -p 9090:9090 gocd-metrics
+
+clean:
+	rm -r vendor
+	rm gocd-metrics
