@@ -18,3 +18,7 @@ docker-run: docker
 clean:
 	rm -r vendor
 	rm gocd-metrics
+
+lint:
+	golint
+	gosec ./...
