@@ -1,9 +1,15 @@
 package observe
 
-import "github.com/ashwanthkumar/go-gocd"
+import (
+	"crypto/tls"
+	"time"
+
+	"github.com/ashwanthkumar/go-gocd"
+	"github.com/parnurzeal/gorequest"
+)
 
 type GocdMetrics struct {
-	pipelines map[string]Pipeline
+	pipelines map[string]*Pipeline
 }
 
 type Pipeline struct {
@@ -13,12 +19,19 @@ type Pipeline struct {
 
 func NewGocdMetrics() GocdMetrics {
 	metrics := GocdMetrics{
-		pipelines: map[string]Pipeline{},
+		pipelines: map[string]*Pipeline{},
 	}
 	return metrics
 }
 
-func (metrics *GocdMetrics) update(gocd gocd.Client) error {
+func NewGocdClient(host string, username string, password string, skipTlsVerify bool) gocd.Client {
+	return &gocd.DefaultClient{
+		Host:    host,
+		Request: gorequest.New().Timeout(60*time.Second).SetBasicAuth(username, password).TLSClientConfig(&tls.Config{InsecureSkipVerify: skipTlsVerify}),
+	}
+}
+
+func UpdateGocdMetrics(metrics *GocdMetrics, gocd gocd.Client) error {
 	pipelineNames, err := getPipelineNames(gocd)
 	if err != nil {
 		return err
@@ -40,13 +53,13 @@ func (metrics *GocdMetrics) update(gocd gocd.Client) error {
 func updatePipelineCounter(metrics *GocdMetrics, pipeline gocd.PipelineInstance) {
 	cachedPipeline, ok := metrics.pipelines[pipeline.Name]
 	if !ok {
-		cachedPipeline = Pipeline{
+		cachedPipeline = &Pipeline{
 			name:    pipeline.Name,
 			counter: 0,
 		}
+		metrics.pipelines[pipeline.Name] = cachedPipeline
 	}
 	cachedPipeline.counter = pipeline.Counter
-	metrics.pipelines[pipeline.Name] = cachedPipeline
 }
 
 func getPipelineNames(gocd gocd.Client) ([]string, error) {

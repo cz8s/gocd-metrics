@@ -133,15 +133,17 @@
   version = "v1.0.0"
 
 [[projects]]
-  digest = "1:d14a5f4bfecf017cb780bdde1b6483e5deb87e12c332544d2c430eda58734bcb"
+  digest = "1:d751917e340ecd1d433dd56baedc11ccd9ed4aafc6e6601732fcaca9c7786700"
   name = "github.com/prometheus/client_golang"
   packages = [
     "prometheus",
+    "prometheus/internal",
     "prometheus/promhttp",
+    "prometheus/testutil",
   ]
   pruneopts = "UT"
-  revision = "c5b7fccd204277076155f10851dad72b76a49317"
-  version = "v0.8.0"
+  revision = "2641b987480bca71fb39738eb8c8b0d577cb1d76"
+  version = "v0.9.4"
 
 [[projects]]
   branch = "master"
@@ -225,8 +227,10 @@
     "github.com/ashwanthkumar/go-gocd",
     "github.com/facebookgo/grace/gracehttp",
     "github.com/gorilla/mux",
+    "github.com/parnurzeal/gorequest",
     "github.com/prometheus/client_golang/prometheus",
     "github.com/prometheus/client_golang/prometheus/promhttp",
+    "github.com/prometheus/client_golang/prometheus/testutil",
     "github.com/stretchr/testify/assert",
   ]
   solver-name = "gps-cdcl"

@@ -7,13 +7,14 @@ import (
 )
 
 var (
-	// FakeMetric is an example metric for using prometheus
-	FakeMetric = prometheus.NewCounterVec(
-		prometheus.CounterOpts{
-			Name: "fake_metric",
-			Help: "A fake counter for showing how to setup prometheus",
+	pipelineCountMetric = prometheus.NewGaugeVec(
+		prometheus.GaugeOpts{
+			Name: "gocd_pipeline_count",
+			Help: "The total number of times a pipeline has ran",
 		},
-		[]string{},
+		[]string{
+			"pipeline",
+		},
 	)
 )
 
@@ -21,8 +22,14 @@ var (
 // Note you must register every metric with prometheus for it show up
 // when the /metrics route is hit.
 func RegisterPrometheus(m *mux.Router) *mux.Router {
-	prometheus.MustRegister(FakeMetric)
+	prometheus.MustRegister(pipelineCountMetric)
 
 	m.Handle("/metrics", promhttp.Handler())
 	return m
+}
+
+func UpdatePrometheus(metrics GocdMetrics) {
+	for _, pipeline := range metrics.pipelines {
+		pipelineCountMetric.WithLabelValues(pipeline.name).Set(float64(pipeline.counter))
+	}
 }
