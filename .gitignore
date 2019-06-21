@@ -2,3 +2,4 @@ vendor
 gocd-metrics
 .idea
 
+integration-test/node_modules

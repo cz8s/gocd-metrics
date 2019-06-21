@@ -22,3 +22,6 @@ clean:
 lint:
 	golint
 	gosec -exclude=G104 ./...
+
+integration-test: docker
+	cd integration-test ; ./test-integration.sh

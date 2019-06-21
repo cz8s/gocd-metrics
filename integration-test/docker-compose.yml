@@ -1,0 +1,28 @@
+version: '2'
+services:
+  go-metrics:
+    image: gocd-metrics:latest
+    ports:
+      - "9090:9090"
+    links:
+      - "go-server"
+    environment:
+      GOCD_HOST: 'http://go-server:8153'
+  go-server:
+    image: gocd/gocd-server:v19.5.0
+    ports:
+      - "8153:8153"
+      - "8154:8154"
+    volumes:
+      - ./godata/config/:/godata/config/
+    environment:
+      GOCD_PLUGIN_INSTALL_yaml_config: 'https://github.com/tomzo/gocd-yaml-config-plugin/releases/download/0.10.2/yaml-config-plugin-0.10.2.jar'
+  go-agent1:
+    image: gocd/gocd-agent-alpine-3.9:v19.5.0
+    links:
+      - "go-server"
+    depends_on:
+      - "go-server"
+    environment:
+      AGENT_AUTO_REGISTER_KEY: '123456789abcdefgh987654321'
+      GO_SERVER_URL: https://go-server:8154/go

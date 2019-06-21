@@ -4,6 +4,9 @@ language: go
 env:
   - DEP_VERSION=0.5.3
 
+services:
+  - docker
+
 before_install:
   - curl -L -s https://github.com/golang/dep/releases/download/v${DEP_VERSION}/dep-linux-amd64 -o $GOPATH/bin/dep
   - chmod +x $GOPATH/bin/dep
@@ -16,3 +19,4 @@ script:
   - make lint
   - make test
   - make docker
+  - make integration-test
