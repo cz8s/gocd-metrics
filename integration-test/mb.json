@@ -1,0 +1,248 @@
+{
+  "protocol": "http",
+  "port": 4545,
+  "numberOfRequests": 139,
+  "requests": [],
+  "stubs": [
+    {
+      "responses": [
+        {
+          "is": {
+            "body": [
+              {
+                "name": "exampleBuilds",
+                "pipelines": [
+                  {
+                    "label": "${COUNT}",
+                    "materials": [
+                      {
+                        "fingerprint": "7526e0e8752cd8af2e6bb480039b6771ab4018d812e258df5861b0c3f64508ca",
+                        "type": "Git",
+                        "description": "URL: https://github.com/cz8s/gocd-metrics.git, Branch: master"
+                      }
+                    ],
+                    "stages": [
+                      {
+                        "name": "defaultStage"
+                      }
+                    ],
+                    "name": "green-pipeline"
+                  },
+                  {
+                    "label": "${COUNT}",
+                    "materials": [
+                      {
+                        "fingerprint": "7526e0e8752cd8af2e6bb480039b6771ab4018d812e258df5861b0c3f64508ca",
+                        "type": "Git",
+                        "description": "URL: https://github.com/cz8s/gocd-metrics.git, Branch: master"
+                      }
+                    ],
+                    "stages": [
+                      {
+                        "name": "defaultStage"
+                      }
+                    ],
+                    "name": "red-pipeline"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "predicates": [
+        {
+          "and": [
+            {
+              "startsWith": {
+                "path": "/go/api/config/pipeline_groups",
+                "method": "GET"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "responses": [
+        {
+          "is": {
+            "body": {
+              "pagination": {
+                "offset": 0,
+                "total": 1,
+                "page_size": 10
+              },
+              "pipelines": [
+                {
+                  "label": "1",
+                  "name": "green-pipeline",
+                  "natural_order": 1,
+                  "can_run": true,
+                  "stages": [
+                    {
+                      "result": "Passed",
+                      "jobs": [
+                        {
+                          "state": "Completed",
+                          "result": "Passed",
+                          "name": "build",
+                          "id": 1,
+                          "scheduled_date": 1561128271911
+                        }
+                      ],
+                      "name": "defaultStage",
+                      "rerun_of_counter": null,
+                      "approval_type": "success",
+                      "scheduled": true,
+                      "operate_permission": true,
+                      "approved_by": "changes",
+                      "can_run": true,
+                      "id": 1,
+                      "counter": "1"
+                    }
+                  ],
+                  "id": 1,
+                  "build_cause": {
+                    "trigger_message": "modified by Christoph <ckluente@thoughtworks.com>",
+                    "approver": "",
+                    "material_revisions": [
+                      {
+                        "material": {
+                          "fingerprint": "7526e0e8752cd8af2e6bb480039b6771ab4018d812e258df5861b0c3f64508ca",
+                          "description": "URL: https://github.com/cz8s/gocd-metrics.git, Branch: master",
+                          "id": 1,
+                          "type": "Git"
+                        },
+                        "modifications": [
+                          {
+                            "modified_time": 1561127068000,
+                            "user_name": "Christoph <ckluente@thoughtworks.com>",
+                            "id": 1,
+                            "revision": "d8cd3618b887dabf8dee8c33dc6df337d4689745",
+                            "email_address": null,
+                            "comment": "integration tests are too slow on travis"
+                          }
+                        ],
+                        "changed": true
+                      }
+                    ],
+                    "trigger_forced": false
+                  },
+                  "preparing_to_schedule": false,
+                  "counter": 1,
+                  "comment": null
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "predicates": [
+        {
+          "and": [
+            {
+              "startsWith": {
+                "path": "/go/api/pipelines/green-pipeline/history",
+                "method": "GET"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "responses": [
+        {
+          "is": {
+            "body": {
+              "pagination": {
+                "offset": 0,
+                "total": 1,
+                "page_size": 10
+              },
+              "pipelines": [
+                {
+                  "label": "1",
+                  "name": "red-pipeline",
+                  "natural_order": 1,
+                  "can_run": true,
+                  "stages": [
+                    {
+                      "result": "Failed",
+                      "jobs": [
+                        {
+                          "state": "Completed",
+                          "result": "Failed",
+                          "name": "build",
+                          "id": 2,
+                          "scheduled_date": 1561128272105
+                        }
+                      ],
+                      "name": "defaultStage",
+                      "rerun_of_counter": null,
+                      "approval_type": "success",
+                      "scheduled": true,
+                      "operate_permission": true,
+                      "approved_by": "changes",
+                      "can_run": true,
+                      "id": 2,
+                      "counter": "1"
+                    }
+                  ],
+                  "id": 2,
+                  "build_cause": {
+                    "trigger_message": "modified by Christoph <ckluente@thoughtworks.com>",
+                    "approver": "",
+                    "material_revisions": [
+                      {
+                        "material": {
+                          "fingerprint": "7526e0e8752cd8af2e6bb480039b6771ab4018d812e258df5861b0c3f64508ca",
+                          "description": "URL: https://github.com/cz8s/gocd-metrics.git, Branch: master",
+                          "id": 1,
+                          "type": "Git"
+                        },
+                        "modifications": [
+                          {
+                            "modified_time": 1561127068000,
+                            "user_name": "Christoph <ckluente@thoughtworks.com>",
+                            "id": 1,
+                            "revision": "d8cd3618b887dabf8dee8c33dc6df337d4689745",
+                            "email_address": null,
+                            "comment": "integration tests are too slow on travis"
+                          }
+                        ],
+                        "changed": true
+                      }
+                    ],
+                    "trigger_forced": false
+                  },
+                  "preparing_to_schedule": false,
+                  "counter": 1,
+                  "comment": null
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "predicates": [
+        {
+          "and": [
+            {
+              "startsWith": {
+                "path": "/go/api/pipelines/red-pipeline/history",
+                "method": "GET"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "_links": {
+    "self": {
+      "href": "http://localhost:2525/imposters/4545"
+    }
+  }
+}

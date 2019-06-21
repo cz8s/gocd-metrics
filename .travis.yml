@@ -19,4 +19,5 @@ script:
   - make lint
   - make test
   - make docker
+  - make integration-test
   - make docker-push

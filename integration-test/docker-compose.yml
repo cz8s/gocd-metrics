@@ -1,28 +1,22 @@
-version: '2'
+version: '3'
 services:
   go-metrics:
+    container_name: gocd-metrics
     image: gocd-metrics:latest
     ports:
       - "9090:9090"
     links:
-      - "go-server"
-    environment:
-      GOCD_HOST: 'http://go-server:8153'
-  go-server:
-    image: gocd/gocd-server:v19.5.0
-    ports:
-      - "8153:8153"
-      - "8154:8154"
-    volumes:
-      - ./godata/config/:/godata/config/
-    environment:
-      GOCD_PLUGIN_INSTALL_yaml_config: 'https://github.com/tomzo/gocd-yaml-config-plugin/releases/download/0.10.2/yaml-config-plugin-0.10.2.jar'
-  go-agent1:
-    image: gocd/gocd-agent-alpine-3.9:v19.5.0
-    links:
-      - "go-server"
+      - "mountebank"
     depends_on:
-      - "go-server"
+      - "mountebank"
     environment:
-      AGENT_AUTO_REGISTER_KEY: '123456789abcdefgh987654321'
-      GO_SERVER_URL: https://go-server:8154/go
+      GOCD_HOST: 'http://mountebank:4545'
+  mountebank:
+    container_name: mountebank
+    image: jkris/mountebank:latest
+    volumes:
+    - .:/config
+    ports:
+    - 2525:2525
+    - 4545:4545
+    command: --configfile /config/mb.json --allowInjection
