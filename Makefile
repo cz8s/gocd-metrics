@@ -12,6 +12,9 @@ gocd-metrics: vendor
 docker: gocd-metrics
 	docker build -t gocd-metrics .
 
+docker-push: 
+	./docker-push.sh
+
 docker-run: docker
 	docker run -d -p 9090:9090 gocd-metrics
 
@@ -25,3 +28,4 @@ lint:
 
 integration-test: docker
 	cd integration-test ; ./test-integration.sh
+

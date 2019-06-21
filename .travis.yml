@@ -20,3 +20,4 @@ script:
   - make test
   - make docker
   - make integration-test
+  - make docker-push
