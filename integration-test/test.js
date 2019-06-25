@@ -1,5 +1,6 @@
 let chai = require("chai");
 let expect = chai.expect;
+chai.should();
 
 let chaiHttp = require("chai-http");
 chai.use(chaiHttp);
