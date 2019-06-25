@@ -7,6 +7,10 @@
   name = "github.com/facebookgo/grace"
 
 [[constraint]]
+  branch = "master"
+  name = "github.com/spf13/cobra"
+
+[[constraint]]
   name = "github.com/gorilla/mux"
   version = "1.6.2"
 
