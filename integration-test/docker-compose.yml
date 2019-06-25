@@ -10,7 +10,7 @@ services:
     depends_on:
       - "mountebank"
     environment:
-      GOCD_URL: 'http://mountebank:4545'
+      GOCD_HOST: 'http://mountebank:4545'
   mountebank:
     container_name: mountebank
     image: jkris/mountebank:latest
