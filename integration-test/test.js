@@ -29,3 +29,14 @@ it("it should contain pipepine information", done => {
       done();
     });
 });
+
+it("it should contain stage result", done => {
+  chai
+    .request(server)
+    .get("/metrics")
+    .end((err, res) => {
+      expect(err).to.be.null;
+      res.text.should.contain("gocd_stage_result");
+      done();
+    });
+});
