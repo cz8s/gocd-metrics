@@ -49,7 +49,7 @@ func UpdatePrometheus(metrics GocdMetrics) {
 			if stage.result == "Passed" {
 				stageResultMetric.WithLabelValues(pipeline.name, stage.name, "Passed").Set(1.0)
 				stageResultMetric.WithLabelValues(pipeline.name, stage.name, "Failed").Set(0.0)
-			} else {
+			} else if stage.result == "Failed" {
 				stageResultMetric.WithLabelValues(pipeline.name, stage.name, "Failed").Set(1.0)
 				stageResultMetric.WithLabelValues(pipeline.name, stage.name, "Passed").Set(0.0)
 			}

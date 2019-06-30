@@ -84,3 +84,27 @@ func TestUpdatePrometheusForResettingOldStageResult(t *testing.T) {
 	require.Nil(t, err)
 	assert.Equal(t, testutil.ToFloat64(stage1FailedGauge), 1.0)
 }
+
+func TestUpdatePrometheusForIgnoringUnknownResult(t *testing.T) {
+	gocdMetrics := NewGocdMetrics()
+	gocdMetrics.pipelines["pipeline1"] = &Pipeline{
+		name:    "pipeline1",
+		counter: 5,
+		stages: []*Stage{
+			&Stage{name: "stage-1",
+				result: "Passed",
+			},
+		},
+	}
+
+	UpdatePrometheus(gocdMetrics)
+	gocdMetrics.pipelines["pipeline1"].stages[0].result = "Building"
+	UpdatePrometheus(gocdMetrics)
+
+	stage1PassedGauge, err := stageResultMetric.GetMetricWithLabelValues("pipeline1", "stage-1", "Passed")
+	require.Nil(t, err)
+	assert.Equal(t, testutil.ToFloat64(stage1PassedGauge), 1.0)
+	stage1UnknownGauge, err := stageResultMetric.GetMetricWithLabelValues("pipeline1", "stage-1", "Failed")
+	require.Nil(t, err)
+	assert.Equal(t, testutil.ToFloat64(stage1UnknownGauge), 0.0)
+}
