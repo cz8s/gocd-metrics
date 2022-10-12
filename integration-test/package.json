@@ -12,7 +12,7 @@
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "mocha": "^6.1.4",
-    "mountebank": "^2.1.2",
+    "mountebank": "^2.7.0",
     "request": "^2.88.0"
   }
 }
